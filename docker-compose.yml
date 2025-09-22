@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
+  express-js-app:
+    build: .
+    container_name: express-js-app
+    ports:
+      - "3000:3000"
+    environment:      
+      NODE_ENV: development
+      APP_PORT: 3000
+      MONGODB_URL: mongodb://host.docker.internal:27017/JUMP-START-expressjs-v2
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+    volumes:
+      - .:/usr/src/mongo.:/usr/src/app
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'      
+    command: npm run start
+
+volumes:
+  mongo-data:
+
+networks:
+  app-network:
+    driver: bridge
