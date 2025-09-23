@@ -14,8 +14,8 @@ export const validateEnv = cleanEnv(process.env, {
 	}),
 	APP_PORT: port(),
 	MONGODB_URL: str({
-		devDefault: 'mongodb://localhost:27017/JUMP-START-expressjs-v2',
-		default: 'mongodb://localhost:27017/JUMP-START-expressjs-v2',
+		devDefault: 'mongodb://localhost:27017/node-assessment',
+		default: 'mongodb://localhost:27017/node-assessment',
 	}),
 	DEBUG_MODE: bool({ default: false }),
 });

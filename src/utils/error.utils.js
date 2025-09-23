@@ -15,6 +15,12 @@ function getErrorFromCode(statusCode) {
 		case 404: {
 			return 'NOT_FOUND';
 		}
+		case 409: {
+			return 'CONFLICT';
+		}
+		case 403: {
+			return 'FORBIDDEN';
+		}
 		default:
 			return 'UNHANDLED_ERROR';
 	}

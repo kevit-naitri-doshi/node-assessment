@@ -4,10 +4,10 @@ import mongoose from 'mongoose';
 import Config from '../../environment/index.js';
 import HttpException from '../../utils/error.utils.js';
 import { USER_ERROR_CODES } from './user.errors.js';
+import UserRoles from '../../utils/roles.js';
+import { pinoFormateConfig as logger } from '../../services/logger.js';
 
 const { Schema, model } = mongoose;
-
-const availablePlans = ['free', 'basic', 'Hero', 'King', 'God'];
 // ===============================================================================
 // APIs schema to validate requests
 // ===============================================================================
@@ -27,17 +27,6 @@ export const signUpUserSchema = {
 	emailId: {
 		isEmail: true,
 		errorMessage: 'Plaese enter valid email',
-	},
-	planType: {
-		custom: {
-			options: (value) => {
-				const validPlans = availablePlans;
-				if (!validPlans.includes(value)) {
-					throw new Error('Invalid plan type');
-				}
-				return true;
-			},
-		},
 	},
 	mobileNo: {
 		isMobilePhone: true,
@@ -79,15 +68,14 @@ const userSchema = new Schema({
 	},
 	lastName: Schema.Types.String,
 	emailId: Schema.Types.String,
-	planType: {
-		type: Schema.Types.String,
-		enum: availablePlans,
-		required: true,
-	},
 	mobileNo: Schema.Types.String,
 	password: { type: Schema.Types.String, required: true },
 	accessToken: Schema.Types.String,
-	profilePicture: Schema.Types.String,
+	role: {
+		type: Schema.Types.String,
+		enum: Object.values(UserRoles),
+		default: UserRoles.USER,
+	},
 });
 
 // --------------------------------------------------------------------------------------------------
@@ -125,20 +113,21 @@ userSchema.statics.findByToken = async function (token) {
 	try {
 		decoded = jwt.verify(token, Config.JWT_PUBLIC_KEY);
 	} catch (err) {
+		logger.error({ err }, 'User: findByToken failed');
 		let hasSessionExpired = false;
 		if (err && err.message && err.message.includes('jwt expired')) {
 			hasSessionExpired = true;
 		}
 		if (hasSessionExpired) {
 			throw new HttpException(
-				404,
+				400,
 				USER_ERROR_CODES.USER_SESSION_EXPIRED,
 				'USER_SESSION_EXPIRED',
 				null,
 			);
 		} else {
 			throw new HttpException(
-				404,
+				400,
 				USER_ERROR_CODES.AUTH_FAILED,
 				'AUTH_FAILED',
 				null,
@@ -147,6 +136,7 @@ userSchema.statics.findByToken = async function (token) {
 	}
 	return this.findOne({
 		_id: decoded._id,
+		role: decoded.role,
 		accessToken: token,
 	});
 };
@@ -156,12 +146,15 @@ userSchema.statics.findByToken = async function (token) {
 // --------------------------------------------------------------------------------
 userSchema.methods.getAuthToken = function () {
 	// "this" here refers to User doc
-	const access = 'auth';
 	const token = jwt
-		.sign({ _id: this._id.toHexString(), access }, Config.JWT_PRIVATE_KEY, {
-			expiresIn: '3d', // 3 days
-			algorithm: 'RS256',
-		})
+		.sign(
+			{ _id: this._id.toHexString(), role: this.role },
+			Config.JWT_PRIVATE_KEY,
+			{
+				expiresIn: '3d', // 3 days
+				algorithm: 'RS256',
+			},
+		)
 		.toString();
 
 	this.accessToken = token;

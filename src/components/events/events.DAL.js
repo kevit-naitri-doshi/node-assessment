@@ -1,0 +1,87 @@
+import { pinoFormateConfig as logger } from '../../services/logger.js';
+import HttpException from '../../utils/error.utils.js';
+import { EVENTS_ERROR_CODES } from './events.errors.js';
+import { Event } from './events.model.js';
+
+/**
+ * DB helper function for get many bot from query
+ *
+ * @returns => array of bot documents
+ */
+export async function getEventListFromDB() {
+	logger.info('EventsDAL: getEventListFromDB');
+	try {
+		return await Event.find().lean();
+	} catch (err) {
+		logger.error({ err }, 'EventsDAL: getEventListFromDB failed');
+		throw new HttpException(
+			500,
+			EVENTS_ERROR_CODES.GET_EVENT_LIST_UNHANDLED_IN_DB,
+			'GET_EVENT_LIST_UNHANDLED_IN_DB',
+			err,
+		);
+	}
+}
+
+/**
+ * DB helper function for create new bot
+ * @param {*} eventBody => Bot data to create new bot
+ * @returns => Document of newly created bot
+ */
+export async function createSingleEventInDB(eventBody) {
+	logger.info('EventsDAL: createSingleEventInDB');
+	try {
+		return await Event.create(eventBody);
+	} catch (err) {
+		logger.error({ err }, 'EventsDAL: createSingleEventInDB failed');
+		throw new HttpException(
+			500,
+			EVENTS_ERROR_CODES.CREATE_EVENT_UNHANDLED_IN_DB,
+			'CREATE_EVENT_UNHANDLED_IN_DB',
+			err,
+		);
+	}
+}
+
+/**
+ * DB helper to find bot and update it's data
+ * @param {string | Schema.Types.ObjectId} eventId => Id of which bot need to update
+ * @param {*} updateData => Object with fields that need to update
+ * @returns => New updated bot document
+ */
+export async function eventFindByIdAndUpdate(eventId, updateData) {
+	logger.info('EventsDAL: eventFindByIdAndUpdate');
+	try {
+		return await Event.findByIdAndUpdate(eventId, updateData, {
+			new: true,
+		}).lean();
+	} catch (err) {
+		logger.error({ err }, 'EventsDAL: eventFindByIdAndUpdate failed');
+		throw new HttpException(
+			500,
+			EVENTS_ERROR_CODES.UPDATE_EVENT_UNHANDLED_IN_DB,
+			'UPDATE_EVENT_UNHANDLED_IN_DB',
+			err,
+		);
+	}
+}
+
+/**
+ * DB helper to delete bot
+ * @param {string | Schema.Types.ObjectId} eventId => Id of bot that need to be deleted
+ * @returns => Bot document that has been deleted
+ */
+export async function eventFindByIdAndDelete(eventId) {
+	logger.info('EventsDAL: eventFindByIdAndDelete');
+	try {
+		return await Event.findByIdAndDelete(eventId).lean();
+	} catch (err) {
+		logger.error({ err }, 'EventsDAL: eventFindByIdAndDelete failed');
+		throw new HttpException(
+			500,
+			EVENTS_ERROR_CODES.DELETE_EVENT_UNHANDLED_IN_DB,
+			'DELETE_EVENT_UNHANDLED_IN_DB',
+			err,
+		);
+	}
+}

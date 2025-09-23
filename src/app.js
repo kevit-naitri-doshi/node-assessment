@@ -7,8 +7,9 @@ import hpp from 'hpp';
 import mongoose from 'mongoose';
 import { dbConnection } from './databases/mongoDbConnection.js';
 import Config from './environment/index.js';
+import process from 'process';
 
-import { pinoFormateConfig } from './services/logger.js';
+import { customLogger } from './services/logger.js';
 
 const BODY_PAYLOAD_LIMIT = 100 * 100000; // 1 MB
 
@@ -16,7 +17,8 @@ class App {
 	// Intializing app configs
 	constructor(routes) {
 		this.app = express();
-		this.logger = pinoFormateConfig;
+		const environment = process.env.NODE_ENV;
+		this.logger = customLogger[environment].logger;
 		this.port = Config.APP_PORT;
 		this.env = Config.NODE_ENV;
 

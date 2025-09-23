@@ -4,6 +4,7 @@ export const USER_ERROR_CODES = {
 	SIGN_IN_BAD_REQUEST: 'Imported parameter missing in sign In request',
 	SIGN_IN_FAIL: 'Provided cred are not correct',
 	USER_NOT_FOUND: 'User not found for email id',
+	USER_ALREADY_EXISTS: 'User already exists with given email id',
 	INCORRECT_PASSWORD: 'Password incorrect',
 	USER_SESSION_EXPIRED: 'User login timeout',
 	AUTH_FAILED: 'Auth failed',
