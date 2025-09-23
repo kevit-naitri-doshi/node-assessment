@@ -12,5 +12,7 @@ export const EVENTS_ERROR_CODES = {
 		'Some important parameter missing in delete request',
 	GET_EVENT_LIST_BAD_REQUEST:
 		'Some important parameter missing in fetching request',
-	EVENT_NOT_FOUND_FOR_DELETE: 'Bot not found',
+	EVENT_NOT_FOUND: 'Event not found',
+	UNHANDLED_REQUEST_IN_DB: 'Unhandled request in db',
+	EVENT_FULL: 'Event has reached maximum number of attendees',
 };

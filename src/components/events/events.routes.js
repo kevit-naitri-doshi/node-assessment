@@ -22,6 +22,12 @@ class EventsRoute {
 			authenticateMiddleware.authorize([UserRoles.USER, UserRoles.ADMIN]),
 			this.eventController.getEventsList,
 		);
+		this.router.get(
+			`${this.path}/:eventId`,
+			authenticateMiddleware.authorize([UserRoles.USER, UserRoles.ADMIN]),
+			this.eventController.getEventsList,
+		);
+
 		this.router.post(
 			this.path,
 			authenticateMiddleware.authorize([UserRoles.ADMIN]),
@@ -38,6 +44,21 @@ class EventsRoute {
 			`${this.path}/:eventId`,
 			authenticateMiddleware.authorize([UserRoles.ADMIN]),
 			this.eventController.deleteExistingEvent,
+		);
+		this.router.post(
+			`${this.path}/:eventId/register`,
+			authenticateMiddleware.authorize([UserRoles.USER, UserRoles.ADMIN]),
+			this.eventController.registerForEvent,
+		);
+		this.router.delete(
+			`${this.path}/:eventId/register`,
+			authenticateMiddleware.authorize([UserRoles.USER, UserRoles.ADMIN]),
+			this.eventController.unregisterFromEvent,
+		);
+		this.router.post(
+			`${this.path}/analytics`,
+			authenticateMiddleware.authorize([UserRoles.ADMIN]),
+			this.eventController.getEventAnalytics,
 		);
 	}
 }

@@ -28,6 +28,10 @@ export const createNewEventSchema = {
 		isString: true,
 		errorMessage: 'Enter valid event description',
 	},
+	maxAttendees: {
+		isInt: true,
+		errorMessage: 'Enter valid max attendees',
+	},
 };
 
 export const updateEventSchema = {
@@ -51,6 +55,11 @@ export const updateEventSchema = {
 		errorMessage: 'Enter valid event description',
 		optional: true,
 	},
+	maxAttendees: {
+		isInt: true,
+		errorMessage: 'Enter valid max attendees',
+		optional: true,
+	},
 };
 
 // Bot Schema
@@ -71,9 +80,30 @@ const EventSchema = new Schema(
 		eventDescription: {
 			type: Schema.Types.String,
 		},
-		userId: {
+		createdBy: {
 			type: Schema.Types.ObjectId,
 			ref: 'User',
+		},
+		maxAttendees: {
+			type: Schema.Types.Number,
+			default: 100,
+		},
+	},
+	{
+		timestamps: true,
+	},
+);
+
+const registeredEventSchema = new Schema(
+	{
+		eventId: {
+			type: Schema.Types.ObjectId,
+			required: true,
+		},
+
+		userId: {
+			type: Schema.Types.ObjectId,
+			required: true,
 		},
 	},
 	{
@@ -82,4 +112,7 @@ const EventSchema = new Schema(
 );
 
 export const Event = model('event', EventSchema);
-export default Event;
+export const registeredEvents = model(
+	'registered_event',
+	registeredEventSchema,
+);

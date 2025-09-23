@@ -4,7 +4,11 @@ import {
 	createSingleEventInDB,
 	eventFindByIdAndDelete,
 	eventFindByIdAndUpdate,
+	getEventAnalytics as getEventAnalyticsDAL,
 	getEventListFromDB,
+	getRegisteredEvents,
+	registerForEvent,
+	unregisterFromEvent,
 } from './events.DAL.js';
 import { EVENTS_ERROR_CODES } from './events.errors.js';
 
@@ -17,7 +21,15 @@ class EventsController {
 	async getEventsList(req, res, next) {
 		logger.info('EventsController: getEventsList');
 		try {
-			const events = await getEventListFromDB();
+			const { location, date } = req.query;
+			let query = {};
+			if (location) {
+				query.eventLocation = location;
+			}
+			if (date) {
+				query.eventDate = date;
+			}
+			const events = await getEventListFromDB(query);
 			logger.info('EventsController: getEventsList success');
 			return res.status(200).json(events);
 		} catch (err) {
@@ -26,6 +38,26 @@ class EventsController {
 		}
 	}
 
+	async getEventById(req, res, next) {
+		logger.info('EventsController: getEventById');
+		try {
+			const { eventId } = req.params;
+			const event = await getEventListFromDB({ _id: eventId });
+			if (!event) {
+				throw new HttpException(
+					404,
+					EVENTS_ERROR_CODES.EVENT_NOT_FOUND,
+					'EVENT_NOT_FOUND',
+					null,
+				);
+			}
+			logger.info('EventsController: getEventById success');
+			return res.status(200).json(event);
+		} catch (err) {
+			logger.error({ err }, 'EventsController: getEventById failed');
+			return next(err);
+		}
+	}
 	/**
 	 * Create new bot with given body
 	 * @param {Request} req => Express request
@@ -34,14 +66,20 @@ class EventsController {
 	async createNewEvent(req, res, next) {
 		logger.info('EventsController: createNewEvent');
 		try {
-			const { eventName, eventDate, eventLocation, eventDescription } =
-				req.body;
+			const {
+				eventName,
+				eventDate,
+				eventLocation,
+				eventDescription,
+				maxAttendees,
+			} = req.body;
 			const newEventData = {
 				eventName,
 				eventDate,
 				eventLocation,
 				eventDescription,
-				userId: req.user._id,
+				maxAttendees,
+				createdBy: req.user._id,
 			};
 			const newEvent = await createSingleEventInDB(newEventData);
 			logger.info('EventsController: createNewEvent success');
@@ -109,8 +147,8 @@ class EventsController {
 			const deletedEvent = await eventFindByIdAndDelete(eventId);
 			if (!deletedEvent) {
 				throw new HttpException(
-					400,
-					EVENTS_ERROR_CODES.EVENT_NOT_FOUND_FOR_DELETE,
+					404,
+					EVENTS_ERROR_CODES.EVENT_NOT_FOUND,
 					'EVENT_NOT_FOUND_FOR_DELETE',
 					null,
 				);
@@ -121,6 +159,112 @@ class EventsController {
 				.json({ ...deletedEvent, message: 'Event deleted successfully' });
 		} catch (err) {
 			logger.error({ err }, 'EventsController: deleteExistingEvent failed');
+			return next(err);
+		}
+	}
+
+	async registerForEvent(req, res, next) {
+		logger.info('EventsController: registerForEvent');
+		try {
+			const { eventId } = req.params;
+			const userId = req.user._id;
+
+			// Fetch event from DB
+			let event = await getEventListFromDB({ _id: eventId });
+			logger.info({ event }, 'Fetched event details');
+			if (!event) {
+				throw new HttpException(
+					404,
+					EVENTS_ERROR_CODES.EVENT_NOT_FOUND,
+					'EVENT_NOT_FOUND',
+					null,
+				);
+			}
+
+			event = event[0]; // As find returns array of documents
+
+			const totalRegistrations = await getRegisteredEvents(eventId);
+			logger.info(
+				`Total registrations for event ${eventId}: ${totalRegistrations}`,
+			);
+			logger.info(`Max attendees for event ${eventId}: ${event.maxAttendees}`);
+			if (totalRegistrations >= event.maxAttendees) {
+				throw new HttpException(
+					400,
+					EVENTS_ERROR_CODES.EVENT_FULL,
+					'EVENT_FULL',
+					null,
+				);
+			}
+
+			const registeredEvent = await registerForEvent(userId, eventId);
+			if (!registeredEvent) {
+				throw new HttpException(
+					500,
+					EVENTS_ERROR_CODES.UNHANDLED_REQUEST_IN_DB,
+					'UNHANDLED_REQUEST_IN_DB',
+					null,
+				);
+			}
+
+			logger.info('EventsController: registerForEvent success');
+			return res
+				.status(200)
+				.json({ message: 'Registered for event successfully' });
+		} catch (err) {
+			logger.error({ err }, 'EventsController: registerForEvent failed');
+			return next(err);
+		}
+	}
+
+	async unregisterFromEvent(req, res, next) {
+		logger.info('EventsController: unregisterFromEvent');
+		try {
+			const { eventId } = req.params;
+			const userId = req.user._id;
+
+			// Fetch event from DB
+			const event = await getEventListFromDB({ _id: eventId });
+			if (!event) {
+				throw new HttpException(
+					404,
+					EVENTS_ERROR_CODES.EVENT_NOT_FOUND,
+					'EVENT_NOT_FOUND',
+					null,
+				);
+			}
+			const unregisterEvent = await unregisterFromEvent(userId, eventId);
+			if (!unregisterEvent) {
+				throw new HttpException(
+					500,
+					EVENTS_ERROR_CODES.UNHANDLED_REQUEST_IN_DB,
+					'UNHANDLED_REQUEST_IN_DB',
+					null,
+				);
+			}
+			logger.info('EventsController: unregisterFromEvent success');
+			return res
+				.status(200)
+				.json({ message: 'Unregistered from event successfully' });
+		} catch (err) {
+			logger.error({ err }, 'EventsController: unregisterFromEvent failed');
+			return next(err);
+		}
+	}
+
+	async getEventAnalytics(req, res, next) {
+		logger.info('EventsController: getEventAnalytics');
+		try {
+			const { totalEvents, topEvents } = await getEventAnalyticsDAL();
+
+			logger.info('EventsController: getEventAnalytics success');
+			return res.status(200).json({
+				totalEvents,
+				topEvents,
+				message: 'Analytics fetched successfully',
+			});
+		} catch (err) {
+			logger.error({ err }, 'EventsController: getEventAnalytics failed');
 			return next(err);
 		}
 	}
