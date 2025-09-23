@@ -1,0 +1,988 @@
+{
+	"info": {
+		"_postman_id": "999995c1-b51b-40fc-b9fb-64db133440ea",
+		"name": "Node Assesmnet",
+		"description": "update the collection `Variables`\n\n`base_url`: [http://localhost:3000](http://localhost:3000) or if you are using postman in web you need to do port forwarding using ms tunnel or ngrock and use that public url example: [https://gzqxghfe-3000.inc1.devtunnels.ms](https://gzqxghfe-3000.inc1.devtunnels.ms)\n\n_**Note: Don't forget to remove /**_ (front-slash) _**from the end of the base url else it will give 404 error**_",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35960072"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "SignUp user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"kitty\",\n    \"lastName\": \"chavda\",\n    \"emailId\": \"kittychavda@gmail.com\",\n    \"mobileNo\": \"7984666021\",\n    \"password\": \"Naitri@123\",\n    \"role\":\"ADMIN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "SignUp user",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"viral\",\n    \"lastName\": \"bhadeshiya\",\n    \"emailId\": \"viralrbhadeshiya@gmail.com\",\n    \"planType\": \"God\",\n    \"mobileNo\": \"7984666021\",\n    \"password\": \"Iamnotgonnatellyoumypassword\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/users",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "34"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"22-kYCP5tWntYOsDFW5SrXD1yCzfiE\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 24 Dec 2021 06:59:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_id\": \"61c56fdc9e867b5814d0289e\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Signin user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = pm.response.json();",
+									"pm.collectionVariables.set(\"authToken\", response.accessToken);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"naitridoshi@gmail.com\",\n    \"password\": \"Naitri@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/signIn",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"signIn"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Signin user",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"viralrbhadeshiya@gmail.com\",\n    \"password\": \"Iamnotgonnatellyoumypassword\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/users/signIn",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"signIn"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "602"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"25a-HYXfwD4SO37/gSolHAJntj9FTNo\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 24 Dec 2021 07:00:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"accessToken\": \"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWM1NmZkYzllODY3YjU4MTRkMDI4OWUiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNjQwMzI5MjEwLCJleHAiOjE2NDA1ODg0MTB9.Jy3NPCncyzC-SVZQtO9DW0UftiQJPINBXBZhkWbTBRvEZvnUtAtQEdpFwyG8kflrdvjGyKENxjSSsWFvobjsjrq8kVC1TrLRFIgiuPioCw2XCSob2q6u9XwdG7W73H495JUGvUivIZq7sDhS7-qgyd8M87-G5IVRh7vcRaP-PsUvO-H4vTKeOM0pFtIGrjGzgCdovEmNGL5kNL1W5Vz7_AKnIfTir9aZF5BuCQ4XWp4GleucU5UOOz2ROmtEoA1eHh9U9fckDocrWgo60-020PbMw9USNIhED_gCPWkSKtmlwt3FV0VQtFccESD-Lt-7eFlfJV-XAaDOTTUrc3wUoQ\",\n    \"userId\": \"61c56fdc9e867b5814d0289e\",\n    \"userName\": \"viral\",\n    \"email\": \"viralrbhadeshiya@gmail.com\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Create Event",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OGQyNjUyYmI4YmQ1ZDc5YjQ2ZDgzZGYiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTg2MTg5MjYsImV4cCI6MTc1ODg3ODEyNn0.pEI9uc2mre8VQ3yJt5nmrhTqDTxDXAAKSVtjDkWlAHFax7-1YsV9egC37ILDzz9U-c9nxVgdo6JkVH1pK2jFXKn1xYsAhbMfoS3oO-Juj-OoxcDc0iFilKdUZ0Ka7IufMHrLeTrNLDXrUJbrwKKgDap8abI-ZT6tIDwFk03EpE2y8NGwfI5HJH4WL4A7DDoFcAPOL69w6SC-HMLgmhrOIcCrIhN2NFhMR0tekjmelGzTEeyB3Vm6FeZtrTWhGphdwdy7nK4g-SDgj51CsvtoD152NmJAQBgItEpUatQwkXGkPErpjYD76jHa2cBnyShan7xoHnELOpx5C5tEEBfGhg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"eventName\": \"Second Event\",\n    \"eventDate\":\"2025-09-23T09:17:45.401Z\",\n    \"eventLocation\":\"Mumbai\",\n    \"eventDescription\":\"My second Event\",\n    \"maxAttendees\":200\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/events",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Creat Bot",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"botName\": \"First Bot\",\n    \"availablePlatform\": [\"whatsapp\"],\n    \"botEndpoint\": \"test default\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/bots",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"bots"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "34"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"22-sTm7iGDwgWyjpmzuSstTT2VrmWU\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 24 Dec 2021 07:44:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_id\": \"61c57a5164a332257b9ee235\"\n}"
+						},
+						{
+							"name": "Error: Invalid platform",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"botName\": \"First Bot\",\n    \"availablePlatform\": [\n        \"whatsapp\",\n        \"facebook2\"\n    ],\n    \"botEndpoint\": \"test default\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/bots",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"bots"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 18 Mar 2025 11:30:48 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "281"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache,no-store"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"119-uSFC7UTWovU8lYe2rJVleL1rz1M\""
+								},
+								{
+									"key": "Expires",
+									"value": "Thu, 01 Jan 1970 00:00:00 GMT"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": ".Tunnels.Relay.WebForwarding.Cookies=CfDJ8Cs4yarcs6pKkdu0hlKHsZuet3Wmdk4Hlx8j2k4F_n1zS2TSiHBqqC_jKaswk-25O0c0HFJiMvcR69z32O4qv9S_KqmGjeK93LMOEpzYf3QJAz28XBVgFetRvirjqz1PhZr0QyMAPT3Xp1mvPaazBlJSFzpYH2UoakEtRgKo0Zf_egxkFj3L02Fwz05SAGKlUIddKb2iRADRIjwRxAqmKCyRptKohT5wfchjLLqoHlTSfv3lVyHD5PlXKxg_pkEjROvB7cWiHThMXhaHAQ2I4H28rahVhuSt_WY02AacRRkmqfg2wF0X9FDBZxdCWAKo7iCnYr3MWmMHMsg8X2ykLqkYom1OLORrEbMJ3BDdcpUSajUpYiAO5rvWHkUkABmwNL1PRrQqgxUTw_nWmljGqKikPRnLy9xG-EL8YAGL46_cMVeJrV1fri5s27bATkntdYCJJL4tFtxI_4Hh7DJOzIX6BktdLF6oxuAf1tihHH9cIobDvDKPQmz6vp0KzLGsN7GcRi2CN3fpXT61_kTjLLCLswuPbnDiVsi2Uk4i77Q7WAA0FPgbcQ83lHbLmkBKX5mija9M1Z4cooZJ77KonnPo2xG-6O_5elq4dPhbqY162uj40FeSX6v_mZucOjkPcKzfSXmp6gQaU53S5O7k10vWMlULXszvUSTjucaH5XD55-0iEwJYVpsIr6v4IOQuR3HL6J9tpI9DTBXCTWxR_g4oEtjtMoEqwBrt4XNKqij3EwCzMiT9Ad0k6vgF6zbaPra0N5WD6jzmiOkBYtbbAbMbg0NSZHnZkTTT59xWBzn4xafobS5w0qYpigDYkperAemi814SNes9eLbF_94wpbhuxgkm5ZOebxgYsoDE7UjKFOMnpEzEGdMohki7WF2LkBFkKK1GCTOhQuWgXJfk5gxpLMHftk9cIYmtTM1_Dl9o; path=/; secure; samesite=none"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, Accept-Encoding"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "RateLimit-Limit",
+									"value": "HttpRequestRatePerPort:1500/m"
+								},
+								{
+									"key": "RateLimit-Remaining",
+									"value": "HttpRequestRatePerPort:1499"
+								},
+								{
+									"key": "RateLimit-Reset",
+									"value": "HttpRequestRatePerPort:11s"
+								},
+								{
+									"key": "X-Report-Abuse",
+									"value": "https://msrc.microsoft.com/report/abuse"
+								},
+								{
+									"key": "x-ms-ratelimit-limit",
+									"value": "1500"
+								},
+								{
+									"key": "x-ms-ratelimit-remaining",
+									"value": "1497"
+								},
+								{
+									"key": "x-ms-ratelimit-used",
+									"value": "3"
+								},
+								{
+									"key": "x-ms-ratelimit-reset",
+									"value": "0"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "X-Robots-Tag",
+									"value": "noindex, nofollow"
+								},
+								{
+									"key": "VsSaaS-Request-Id",
+									"value": "ccd51ea1-0871-423e-b8ee-40408d67e995"
+								},
+								{
+									"key": "X-Served-By",
+									"value": "tunnels-prod-rel-inc1-v3-cluster"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"MIDDLWARE_VALIDATION_ERROR\",\n    \"message\": \"Middleware validation fail\",\n    \"meta\": {\n        \"errors\": [\n            {\n                \"type\": \"field\",\n                \"value\": [\n                    \"whatsapp\",\n                    \"facebook2\"\n                ],\n                \"msg\": \"facebook2 is not valid platform\",\n                \"path\": \"availablePlatform\",\n                \"location\": \"body\"\n            }\n        ],\n        \"traceId\": \"b3414fac-ee35-4230-b875-e5121a886d44\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get All Events",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OGQyNjUyYmI4YmQ1ZDc5YjQ2ZDgzZGYiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTg2MTg5MjYsImV4cCI6MTc1ODg3ODEyNn0.pEI9uc2mre8VQ3yJt5nmrhTqDTxDXAAKSVtjDkWlAHFax7-1YsV9egC37ILDzz9U-c9nxVgdo6JkVH1pK2jFXKn1xYsAhbMfoS3oO-Juj-OoxcDc0iFilKdUZ0Ka7IufMHrLeTrNLDXrUJbrwKKgDap8abI-ZT6tIDwFk03EpE2y8NGwfI5HJH4WL4A7DDoFcAPOL69w6SC-HMLgmhrOIcCrIhN2NFhMR0tekjmelGzTEeyB3Vm6FeZtrTWhGphdwdy7nK4g-SDgj51CsvtoD152NmJAQBgItEpUatQwkXGkPErpjYD76jHa2cBnyShan7xoHnELOpx5C5tEEBfGhg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/events?location=Mumbai",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"events"
+							],
+							"query": [
+								{
+									"key": "location",
+									"value": "Mumbai"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get All Bots",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/bots",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"bots"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 18 Mar 2025 11:35:22 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "758"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2f6-Q7E0KgjAhC2efsa1CePAtxPM87Y\""
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, Accept-Encoding"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "RateLimit-Limit",
+									"value": "HttpRequestRatePerPort:1500/m"
+								},
+								{
+									"key": "RateLimit-Remaining",
+									"value": "HttpRequestRatePerPort:1499"
+								},
+								{
+									"key": "RateLimit-Reset",
+									"value": "HttpRequestRatePerPort:58s"
+								},
+								{
+									"key": "X-Report-Abuse",
+									"value": "https://msrc.microsoft.com/report/abuse"
+								},
+								{
+									"key": "x-ms-ratelimit-limit",
+									"value": ""
+								},
+								{
+									"key": "x-ms-ratelimit-remaining",
+									"value": ""
+								},
+								{
+									"key": "x-ms-ratelimit-used",
+									"value": "1"
+								},
+								{
+									"key": "x-ms-ratelimit-reset",
+									"value": ""
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "X-Robots-Tag",
+									"value": "noindex, nofollow"
+								},
+								{
+									"key": "VsSaaS-Request-Id",
+									"value": "6c428e7f-8221-45d8-a551-d57d94203fa3"
+								},
+								{
+									"key": "X-Served-By",
+									"value": "tunnels-prod-rel-inc1-v3-cluster"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"_id\": \"67d95962b020fe29b6392563\",\n        \"botName\": \"First Bot\",\n        \"availablePlatform\": [\n            \"whatsapp\",\n            \"facebook\"\n        ],\n        \"botEndpoint\": \"test default\",\n        \"userId\": \"67d94f44b80e9c71902deb45\",\n        \"createdAt\": \"2025-03-18T11:30:42.094Z\",\n        \"updatedAt\": \"2025-03-18T11:30:42.094Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"67d95a5d86272376d1a233df\",\n        \"botName\": \"Second Bot\",\n        \"availablePlatform\": [\n            \"whatsapp\",\n            \"facebook\"\n        ],\n        \"botEndpoint\": \"test default\",\n        \"userId\": \"67d94f44b80e9c71902deb45\",\n        \"createdAt\": \"2025-03-18T11:34:53.875Z\",\n        \"updatedAt\": \"2025-03-18T11:34:53.875Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"67d95a6986272376d1a233e2\",\n        \"botName\": \"First Bot\",\n        \"availablePlatform\": [\n            \"whatsapp\",\n            \"facebook\"\n        ],\n        \"botEndpoint\": \"test default\",\n        \"userId\": \"67d94f44b80e9c71902deb45\",\n        \"createdAt\": \"2025-03-18T11:35:05.347Z\",\n        \"updatedAt\": \"2025-03-18T11:35:05.347Z\",\n        \"__v\": 0\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Update Event by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OGQyNjUyYmI4YmQ1ZDc5YjQ2ZDgzZGYiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTg2MTg5MjYsImV4cCI6MTc1ODg3ODEyNn0.pEI9uc2mre8VQ3yJt5nmrhTqDTxDXAAKSVtjDkWlAHFax7-1YsV9egC37ILDzz9U-c9nxVgdo6JkVH1pK2jFXKn1xYsAhbMfoS3oO-Juj-OoxcDc0iFilKdUZ0Ka7IufMHrLeTrNLDXrUJbrwKKgDap8abI-ZT6tIDwFk03EpE2y8NGwfI5HJH4WL4A7DDoFcAPOL69w6SC-HMLgmhrOIcCrIhN2NFhMR0tekjmelGzTEeyB3Vm6FeZtrTWhGphdwdy7nK4g-SDgj51CsvtoD152NmJAQBgItEpUatQwkXGkPErpjYD76jHa2cBnyShan7xoHnELOpx5C5tEEBfGhg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"maxAttendees\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/events/68d278e47688fa1a73c53779",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"events",
+								"68d278e47688fa1a73c53779"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Event by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OGQyNjUyYmI4YmQ1ZDc5YjQ2ZDgzZGYiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTg2MTg5MjYsImV4cCI6MTc1ODg3ODEyNn0.pEI9uc2mre8VQ3yJt5nmrhTqDTxDXAAKSVtjDkWlAHFax7-1YsV9egC37ILDzz9U-c9nxVgdo6JkVH1pK2jFXKn1xYsAhbMfoS3oO-Juj-OoxcDc0iFilKdUZ0Ka7IufMHrLeTrNLDXrUJbrwKKgDap8abI-ZT6tIDwFk03EpE2y8NGwfI5HJH4WL4A7DDoFcAPOL69w6SC-HMLgmhrOIcCrIhN2NFhMR0tekjmelGzTEeyB3Vm6FeZtrTWhGphdwdy7nK4g-SDgj51CsvtoD152NmJAQBgItEpUatQwkXGkPErpjYD76jHa2cBnyShan7xoHnELOpx5C5tEEBfGhg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/events/68d267c30170c72cf26c602e",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"events",
+								"68d267c30170c72cf26c602e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register Event",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OGQyNjIwOGUxYzFjM2ExYmY2YWNlMjQiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc1ODYyMzIyOSwiZXhwIjoxNzU4ODgyNDI5fQ.LU7JSQKcKtjxIFvTObtaSrF1iKAGiqhix1hqEeqbSxkXQ8bmeLqIToiO-9gVJA_t9icHVeriTzMkQOVctiUMxx--861G8CZ1DkQ5Q5302WrGeBjOTxa3eJ4czTCE8YAx2ubgjcb-MWcCc14ZFsciM0nOv2KBfB4ai013pYrdrlbu5w9mMezhtWGkRVtZBGvYrWyOG1v6kzfOt8vzErjMlgLkQtKJfTy9MxNroUXsaGY-gZlczfBPiig4-1cfed23A0lO2efb7q1h5eOIWLtb0CNu4XZ5ZvEzmOm9GwHznij_zdImv9iw3fQ-dWM17DjvvboqlFRI5cAMv5ClBsLitQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/events/68d27eebbe9cdb1c91b95c5d/register/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"events",
+								"68d27eebbe9cdb1c91b95c5d",
+								"register",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "analytics of Event",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OGQyNjUyYmI4YmQ1ZDc5YjQ2ZDgzZGYiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTg2MTg5MjYsImV4cCI6MTc1ODg3ODEyNn0.pEI9uc2mre8VQ3yJt5nmrhTqDTxDXAAKSVtjDkWlAHFax7-1YsV9egC37ILDzz9U-c9nxVgdo6JkVH1pK2jFXKn1xYsAhbMfoS3oO-Juj-OoxcDc0iFilKdUZ0Ka7IufMHrLeTrNLDXrUJbrwKKgDap8abI-ZT6tIDwFk03EpE2y8NGwfI5HJH4WL4A7DDoFcAPOL69w6SC-HMLgmhrOIcCrIhN2NFhMR0tekjmelGzTEeyB3Vm6FeZtrTWhGphdwdy7nK4g-SDgj51CsvtoD152NmJAQBgItEpUatQwkXGkPErpjYD76jHa2cBnyShan7xoHnELOpx5C5tEEBfGhg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"eventName\": \"Second Event\",\n    \"eventDate\":\"2025-09-23T09:17:45.401Z\",\n    \"eventLocation\":\"Rajkot\",\n    \"eventDescription\":\"My second Event\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/events/analytics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"events",
+								"analytics"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "authToken",
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2Q5NGY0NGI4MGU5YzcxOTAyZGViNDUiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNzQyMjk2NDM5LCJleHAiOjE3NDI1NTU2Mzl9.LZI7NwU8_ptrGjOhdMg1AbWUaoctUP3SAztZAK6-Uag0Jvy_bT9b1Yu78_-iag2AaAZJ3l991Mpes67TmnYKS-S9G7c0fvduqbpE5L2u-vYHfpv9EFBCl65JWkIYycmom5jIvTgfgobfw-Tpr9QLS21uCRt6s9ALPwbjyP2w88IiIIpPgTIqt64vMUmSKLUOFxWdQFLbF60_Dwe3KBQ6GdSjfddZ26Ur5eBg6XtMkzB_xSxtP0Qo4U0EDQkQeKza2QD6iIHjH-uk1wAU0bmOZiU6y_lGFgK9xAUGYBkUfAJpjeho10F-ObIr19UVzxBOl0O17ITmFIUtS-mD1F9DOg",
+			"type": "string"
+		}
+	]
+}
